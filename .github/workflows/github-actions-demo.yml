@@ -1,7 +1,7 @@
 name: GitHub Actions Demo
 on: [push]
 jobs:
-  x:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -19,8 +19,23 @@ jobs:
         run: npm ci
       - run: npm test
       - run: npm run build --if-present
-
-#  Explore-GitHub-Actions:
+      - name: 'Upload dist'
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+  deploy:
+    name: Upload to Amazon S3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+      - run: |
+          ${{ github.workspace }}
+        #  Explore-GitHub-Actions:
 #    runs-on: ubuntu-latest
 #    steps:
 #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
