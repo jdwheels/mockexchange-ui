@@ -22,6 +22,7 @@ const App: FC = function () {
   }, [setUserDetails]);
   return (
     <div>
+      <div>test</div>
       {userDetails ? (
         <button className="logout" type="button" onClick={handleLogout}>Logout</button>
       ) : (
