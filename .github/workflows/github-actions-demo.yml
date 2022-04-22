@@ -50,13 +50,14 @@ jobs:
         env:
           UI_BUCKET: ${{ secrets.UI_BUCKET }}
         run: |
-          aws s3 ls $UI_BUCKET
-#          aws s3 sync --delete . $UI_BUCKET
+#          aws s3 ls $UI_BUCKET
+          aws s3 sync --delete . $UI_BUCKET
       - name: Invalidate the cache
         env:
           UI_DISTRIBUTION: ${{ secrets.UI_DISTRIBUTION }}
         run: |
-          echo $UI_DISTRIBUTION
+          aws cloudfront create-invalidation --distribution-id $UI_DISTRIBUTION --paths "/*"
+
 #          aws s3 sync --delete . $UI_BUCKET
 #    runs-on: ubuntu-latest
 #    steps:
