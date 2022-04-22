@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: x-react-sandbox-d
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: x-react-sandbox
+  template:
+    metadata:
+      labels:
+        app: x-react-sandbox
+    spec:
+      volumes:
+        - name: certs
+          secret:
+            secretName: react-sandbox-in
+      containers:
+        - name: nginx
+          image: jdwheels/typescript-sandbox-react
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: certs
+              mountPath: /etc/nginx/ssl

@@ -1,0 +1,10 @@
+# nonk8s
+apiVersion: skaffold/v2beta26
+kind: Config
+build:
+  artifacts:
+  - image: jdwheels/typescript-sandbox-react
+deploy:
+  kubectl:
+    manifests:
+    - k8s/*
