@@ -26,6 +26,8 @@ jobs:
           path: dist
           retention-days: 1
   deploy:
+    needs:
+      - build
     name: Upload to Amazon S3
     runs-on: ubuntu-latest
     steps:
