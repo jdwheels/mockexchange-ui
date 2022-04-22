@@ -47,9 +47,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region:  ${{ secrets.AWS_REGION }}
       - name: Copy files to the test website with the AWS CLI
+        env:
+          UI_BUCKET: ${{ secrets.UI_BUCKET }}
         run: |
-          aws s3 ls s3://mockexchange
-        #  Explore-GitHub-Actions:
+          aws s3 ls $UI_BUCKET
+#          aws s3 sync --delete . $UI_BUCKET
+      - name: Invalidate the cache
+        env:
+          UI_DISTRIBUTION: ${{ secrets.UI_DISTRIBUTION }}
+        run: |
+          echo $UI_DISTRIBUTION
+#          aws s3 sync --delete . $UI_BUCKET
 #    runs-on: ubuntu-latest
 #    steps:
 #      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
