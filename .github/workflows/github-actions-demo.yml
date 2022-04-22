@@ -50,7 +50,6 @@ jobs:
         env:
           UI_BUCKET: ${{ secrets.UI_BUCKET }}
         run: |
-#          aws s3 ls $UI_BUCKET
           aws s3 sync --delete . $UI_BUCKET
       - name: Invalidate the cache
         env:
