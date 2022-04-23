@@ -1,14 +1,17 @@
 deploy:
   image:
-    name: bitnami/kubectl:latest
+    name: docker.k8s.local/jdwheels/bitnami-kubectl:1.22
     entrypoint: [""]
   script:
-    - kubectl config view
-    - kubectl config get-contexts
     - kubectl config use-context mockexchange/mockexchange-agent:primary
-    - kubectl config get-contexts
-    - kubectl config set-cluster gitlab --embed-certs --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    - ls -la /var/run/secrets/kubernetes.io/serviceaccount
-    - cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    - kubectl config view
     - kubectl get pods -n mockexchange
+#  script:
+#    - kubectl config view
+#    - kubectl config get-contexts
+#    - kubectl config use-context mockexchange/mockexchange-agent:primary
+#    - kubectl config get-contexts
+#    - kubectl config set-cluster gitlab --embed-certs --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+#    - ls -la /var/run/secrets/kubernetes.io/serviceaccount
+#    - cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+#    - kubectl config view
+#    - kubectl get pods -n mockexchange
