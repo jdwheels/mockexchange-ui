@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export const pluralize = function (count: number, singular: string, plural?: string) {
-  return `${count} ${count > 1 ? plural || `${singular}s` : singular}`;
+  return `${count > 1 ? plural || `${singular}s` : singular}`;
 };
 
 export function getCookie(cookieName: string): string {
@@ -42,21 +42,25 @@ export interface UseFetchOptions<T> {
   initialValue?: T | undefined
 }
 
-export function useFetch<T>(uri: string, options: UseFetchOptions<T> = {})
+const defaultMapper = <T>(r: Response) => r.json() as Promise<T>;
+
+export function useFetch<T>(uri: string, options: UseFetchOptions<T> = {}, exec = true)
   : [T | undefined, (t: T | undefined) => void, boolean, string] {
-  const { init, initialValue, resultMapper = (r) => r.json() as Promise<T> } = options;
+  const { init, initialValue, resultMapper = defaultMapper } = options;
   const [result, setResult] = useState<T | undefined>(initialValue);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   useEffect(() => {
-    fetch(uri, init)
-      .then((r) => handleResponse(r, resultMapper))
-      .then(setResult)
-      .catch((e: Error) => {
-        console.error(e);
-        setError(e.message);
-      })
-      .finally(() => setLoading(false));
-  }, [uri, init, resultMapper]);
+    if (exec) {
+      fetch(uri, init)
+        .then((r) => handleResponse(r, resultMapper))
+        .then(setResult)
+        .catch((e: Error) => {
+          console.error(e);
+          setError(e.message);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [uri, init, resultMapper, exec]);
   return [result, setResult, loading, error];
 }

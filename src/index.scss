@@ -7,6 +7,20 @@ body {
   background-color: #303030;
 }
 
+.post-body {
+  p {
+    margin-top: 0;
+  }
+}
+
+pre {
+  background-color: black;
+  color: lawngreen;
+  code {
+    font-family: monospace;
+  }
+}
+
 a {
   color: white;
 }

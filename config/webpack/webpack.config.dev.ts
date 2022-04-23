@@ -14,6 +14,9 @@ const config: Configuration & { devServer: DevServerConfiguration } = {
     port: 3200,
     historyApiFallback: true,
     proxy: {
+      '/api/mockComments': {
+        target: 'http://localhost:8083',
+      },
       '/api': {
         target: 'http://localhost:8081',
       },
