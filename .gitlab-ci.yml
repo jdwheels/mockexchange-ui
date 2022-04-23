@@ -6,4 +6,5 @@ deploy:
     - kubectl config get-contexts
     - kubectl config use-context mockexchange/mockexchange-agent:primary
     - kubectl config get-contexts
+    - kubectl config set-cluster gitlab --embed-certs --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
     - kubectl get pods -n mockexchange
