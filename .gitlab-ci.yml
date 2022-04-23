@@ -4,4 +4,6 @@ deploy:
     entrypoint: [""]
   script:
     - kubectl config get-contexts
+    - kubectl config use-context mockexchange/mockexchange-agent:primary
+    - kubectl config get-contexts
     - kubectl get pods -n mockexchange
