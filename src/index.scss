@@ -16,6 +16,7 @@ body {
 pre {
   background-color: black;
   color: lawngreen;
+
   code {
     font-family: monospace;
   }
@@ -26,30 +27,30 @@ a {
 }
 
 a.login {
-  //color: black;
-  //background-color: #18ffff;
-  //padding: 16px;
-  //border-radius: 12px;
+  // color: black;
+  // background-color: #18ffff;
+  // padding: 16px;
+  // border-radius: 12px;
   color: white;
-  //text-decoration: none;
-  //display: inline-block;
-  //margin: 0 32px;
-  //text-align: center;
-  //border: none
+
+  // text-decoration: none;
+  // display: inline-block;
+  // margin: 0 32px;
+  // text-align: center;
+  // border: none
 }
 
 button.logout {
-
-  //color: black;
-  //background-color: #18ffff;
-  //padding: 16px;
-  //border-radius: 12px;
-  //text-decoration: none;
-  //font-size: 16px;
-  //display: block;
-  //margin: 16px 32px;
-  //text-align: center;
-  //border: none;
+  // color: black;
+  // background-color: #18ffff;
+  // padding: 16px;
+  // border-radius: 12px;
+  // text-decoration: none;
+  // font-size: 16px;
+  // display: block;
+  // margin: 16px 32px;
+  // text-align: center;
+  // border: none;
 }
 
 .page-x {
@@ -73,15 +74,15 @@ button.logout {
   width: 1px;
 }
 
-code {
-  font-family:
-    source-code-pro,
-    Menlo,
-    Monaco,
-    Consolas,
-    "Courier New",
-    monospace;
-}
+// code {
+//  font-family:
+//    source-code-pro,
+//    Menlo,
+//    Monaco,
+//    Consolas,
+//    "Courier New",
+//    monospace;
+// }
 
 ul {
   li > a {
