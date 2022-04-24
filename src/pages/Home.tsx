@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { MockPost, PostsResponse } from '../posts/types';
 import { PostsList } from '../posts/PostsList';
 import { useFetch, UseFetchOptions } from '../common/utils';
+import { Loading } from '../common/Loading';
 
 const postOptions: UseFetchOptions<MockPost[]> = {
   resultMapper: (r: Response) => r.json().then((j: PostsResponse) => j.content),
@@ -16,7 +17,7 @@ export const Home: React.FC = function () {
       <h1>Software Engineering</h1>
       <h2>Explore Our Questions</h2>
       {loadingPosts && (
-        <div className="loading">Loading...</div>
+        <Loading />
       )}
       {postsError && (
         <p>There was an error loading posts, try again later</p>
