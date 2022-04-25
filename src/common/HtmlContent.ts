@@ -25,13 +25,13 @@ const HtmlContentImpl = function<T extends keyof HTMLElementTagNameMap> (
   } = props;
   // const [resolvedOptions, setResolvedOptions] = useState<IOptions>(defaultOptions);
 
-  const handleSanitize = useCallback((c: string) => {
-    console.log('sanitizing...', c);
-    return sanitizeHtml(c, {
+  const handleSanitize = useCallback(
+    (c: string) => sanitizeHtml(c, {
       ...defaultOptions,
       ...sanitizeOptions,
-    });
-  }, [sanitizeOptions]);
+    }),
+    [sanitizeOptions],
+  );
 
   const [sanitized, setSanitized] = useState('');
 
@@ -39,11 +39,11 @@ const HtmlContentImpl = function<T extends keyof HTMLElementTagNameMap> (
     setSanitized(handleSanitize(children));
   }, [handleSanitize, children]);
 
-  useEffect(() => {
-    console.log({ sanitized });
-  }, [sanitized]);
+  // useEffect(() => {
+  //   // console.log({ sanitized });
+  // }, [sanitized]);
 
-  console.log({ content: children });
+  // console.log({ content: children });
 
   return createElement(element, {
     dangerouslySetInnerHTML: {
