@@ -2,8 +2,7 @@ name: Webpack Build and Cloudfront Upload
 on:
   push:
     branches:
-      - actions
-      - helm
+      - main
 jobs:
   build:
     name: Build
@@ -17,10 +16,6 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Lint
-        run: npm run lint
-      - name: Test
-        run: npm test
       - name: Build
         run: npm run build
       - name: Upload dist
