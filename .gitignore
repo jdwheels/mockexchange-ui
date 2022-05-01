@@ -1,3 +1,7 @@
+certs/
+
+_values.*.yaml
+
 node_modules/
 dist/
 coverage/

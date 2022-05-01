@@ -11,16 +11,22 @@ export const PostCard: FC<PostCardProps> = function ({ p }) {
       <div className="mock-post-side">
         {p.votes && (
           <div className="mock-post-votes">
+            {p.votes.length}
+            {' '}
             {pluralize(p.votes.length, 'vote')}
           </div>
         )}
         {p.answerCount && (
           <div className="mock-post-answer-count">
+            {p.answerCount}
+            {' '}
             {pluralize(p.answerCount, 'answer')}
           </div>
         )}
         {p.viewCount && (
           <div>
+            {p.viewCount}
+            {' '}
             {pluralize(p.viewCount, 'view')}
           </div>
         )}

@@ -1,0 +1,60 @@
+name: Webpack Build and Cloudfront Upload
+on:
+  push:
+    branches:
+      - actions
+      - helm
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Upload dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+  deploy:
+    needs:
+      - build
+    name: Upload to Amazon S3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+      - run: |
+          ls ${{ github.workspace }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region:  ${{ secrets.AWS_REGION }}
+      - name: Copy files to the test website with the AWS CLI
+        env:
+          UI_BUCKET: ${{ secrets.UI_BUCKET }}
+        run: |
+          aws s3 sync --delete . $UI_BUCKET
+      - name: Invalidate the cache
+        env:
+          UI_DISTRIBUTION: ${{ secrets.UI_DISTRIBUTION }}
+        run: |
+          aws cloudfront create-invalidation --distribution-id $UI_DISTRIBUTION --paths "/*"

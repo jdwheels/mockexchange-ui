@@ -1,6 +1,8 @@
 import { merge } from 'webpack-merge';
 import { Configuration } from 'webpack';
 import { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import fs from 'fs';
+import path from 'path';
 import common from './webpack.config.common';
 
 const config: Configuration & { devServer: DevServerConfiguration } = {
@@ -13,24 +15,19 @@ const config: Configuration & { devServer: DevServerConfiguration } = {
   devServer: {
     port: 3200,
     historyApiFallback: true,
+    server: {
+      options: {
+        key: fs.readFileSync(path.resolve('certs', 'localhost.key')),
+        cert: fs.readFileSync(path.resolve('certs', 'localhost.crt')),
+      },
+      type: 'spdy',
+    },
     proxy: {
-      '/api': {
-        target: 'http://localhost:8081',
+      '/comments-api': {
+        target: 'https://localhost:8083',
       },
-      '/login': {
-        target: 'http://localhost:8081',
-      },
-      '/x': {
-        target: 'http://localhost:8081',
-      },
-      '/oauth2': {
-        target: 'http://localhost:8081',
-      },
-      '/logout': {
-        target: 'http://localhost:8081',
-      },
-      '/null': {
-        target: 'http://localhost:8081',
+      '/posts-api': {
+        target: 'https://localhost:8081',
       },
     },
   },

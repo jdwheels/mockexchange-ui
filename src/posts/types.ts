@@ -90,5 +90,19 @@ export interface PostsListProps {
   posts: MockPost[];
 }
 
-// export type PostsResponse = CollectionResponse<'mockPosts', MockPost>;
+export type PostsCollectionResponse = CollectionResponse<'mockPosts', MockPost>;
 export type PostsResponse = ContentResponse<MockPost>;
+
+export interface MockComment {
+  'id' : number,
+  'postId' : number,
+  'score' : number,
+  'text' : string
+  'creationDate' : string
+  'userId' : number | null,
+  'userDisplayName' : string | null,
+  'contentLicense' : string,
+  user: MockUser | null
+}
+
+export type CommentsResponse = CollectionResponse<'mockComments', MockComment>;
