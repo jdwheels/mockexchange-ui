@@ -1,7 +1,14 @@
 name: Unit tests
 on:
-  - push
-
+  push:
+    paths:
+      - src/**
+      - config/**
+      - babel.config.js
+      - tsconfig*.json
+      - stylelint.config.js
+      - jest.config.js
+      - .eslint*
 jobs:
   unit_tests:
     name: Unit tests

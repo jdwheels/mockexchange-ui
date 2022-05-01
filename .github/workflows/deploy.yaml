@@ -1,6 +1,13 @@
 name: Webpack Build and Cloudfront Upload
 on:
   push:
+    paths:
+      - src/**
+      - public/**
+      - .browserslistrc
+      - babel.config.js
+      - config/webpack.config.common.ts
+      - config/webpack.config.prod.ts
     branches:
       - main
 jobs:
