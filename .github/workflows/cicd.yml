@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - actions
+      - helm
 jobs:
   build:
     name: Build

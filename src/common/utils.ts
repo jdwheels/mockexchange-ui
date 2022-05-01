@@ -15,7 +15,7 @@ export function getCookie(cookieName: string): string {
 }
 
 export function logout(): Promise<Response> {
-  return fetch('/logout', {
+  return fetch('/posts-api/logout', {
     method: 'POST',
     headers: {
       'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'),

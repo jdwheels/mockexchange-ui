@@ -10,7 +10,7 @@ const postOptions: UseFetchOptions<MockPost[]> = {
 };
 
 export const Home: React.FC = function () {
-  const [posts,, loadingPosts, postsError] = useFetch<MockPost[]>('/x/y', postOptions);
+  const [posts,, loadingPosts, postsError] = useFetch<MockPost[]>('/posts-api/x/y', postOptions);
 
   return (
     <div data-testid="home">
