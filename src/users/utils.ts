@@ -7,5 +7,5 @@ const useUserDetailsOptions: UseFetchOptions<UserDetails | null> = {
 };
 
 export function useUserDetails() {
-  return useFetch<UserDetails | null>('/posts-api/x/user', useUserDetailsOptions);
+  return useFetch<UserDetails | null>('/posts-api/auth/user', useUserDetailsOptions);
 }

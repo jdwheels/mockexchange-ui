@@ -9,7 +9,7 @@ import { PostsResponse } from '../posts/types';
 
 beforeEach(() => {
   global.fetch = jest.fn().mockImplementation((u: string) => {
-    if (u.startsWith('/posts-api/x/y')) {
+    if (u.startsWith('/posts-api/posts/questions')) {
       return mockFetch<PostsResponse>({
         content: [],
       })();

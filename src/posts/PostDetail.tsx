@@ -24,8 +24,8 @@ interface PostDetailImplProps {
 
 const PostDetailImpl: FC<PostDetailImplProps> = function ({ postId }) {
   const [post] = useFetch<MockPost>(`/posts-api/mockPosts/${postId}`);
-  const [postComments] = useFetch<MockComment[]>(`/comments-api/mockComments/search/y?postIds=${postId}`, commentOptions);
-  const [answers] = useFetch<MockPost[]>(`/posts-api/mockPosts/search/xy?parentId=${postId}`, answerOptions);
+  const [postComments] = useFetch<MockComment[]>(`/comments-api/mockComments/search/getCommentsFor?postIds=${postId}`, commentOptions);
+  const [answers] = useFetch<MockPost[]>(`/posts-api/mockPosts/search/getAnswers?parentId=${postId}`, answerOptions);
 
   const [replyIds, setReplyIds] = useState<string>('');
 
@@ -36,7 +36,7 @@ const PostDetailImpl: FC<PostDetailImplProps> = function ({ postId }) {
   }, [answers]);
 
   const [otherComments] = useFetch<MockComment[]>(
-    `/comments-api/mockComments/search/y?postIds=${replyIds}`,
+    `/comments-api/mockComments/search/getCommentsFor?postIds=${replyIds}`,
     commentOptions,
     replyIds !== '',
   );

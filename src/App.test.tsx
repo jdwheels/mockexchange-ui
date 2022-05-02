@@ -4,7 +4,7 @@ import { UserDetails, UserDetailsResponse } from './users/types';
 
 beforeEach(() => {
   global.fetch = jest.fn().mockImplementation((u: string) => {
-    if (u.startsWith('/posts-api/x/user')) {
+    if (u.startsWith('/posts-api/auth/user')) {
       return mockFetch<UserDetailsResponse>({
         user: { name: 'test' },
       });
