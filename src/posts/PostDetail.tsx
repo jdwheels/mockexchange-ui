@@ -1,31 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import {
-  CommentsResponse, MockComment, MockPost, PostsCollectionResponse,
-} from './types';
-import { useFetch, UseFetchOptions } from '../common/utils';
+import { MockComment, MockPost } from './types';
+import { useAsync } from '../common/utils';
 import { InlineComment } from '../comments/InlineComment';
 import { Answer } from './Answer';
 import { Loading } from '../common/Loading';
-
-const commentOptions: UseFetchOptions<MockComment[]> = {
-  resultMapper: (r: Response) => r.json().then((j: CommentsResponse) => j._embedded.mockComments),
-};
-
-const answerOptions: UseFetchOptions<MockPost[]> = {
-  resultMapper: (
-    r: Response,
-  ) => r.json().then((j: PostsCollectionResponse) => j._embedded.mockPosts),
-};
+import { postsService } from './postsService';
+import { commentsService } from '../comments/commentsService';
 
 interface PostDetailImplProps {
   postId: string;
 }
 
 const PostDetailImpl: FC<PostDetailImplProps> = function ({ postId }) {
-  const [post] = useFetch<MockPost>(`/posts-api/mockPosts/${postId}`);
-  const [postComments] = useFetch<MockComment[]>(`/comments-api/mockComments/search/getCommentsFor?postIds=${postId}`, commentOptions);
-  const [answers] = useFetch<MockPost[]>(`/posts-api/mockPosts/search/getAnswers?parentId=${postId}`, answerOptions);
+  const [post] = useAsync<MockPost, string>(postsService.getQuestion, postId, null);
+  const [postComments] = useAsync<MockComment[], string>(commentsService.getComments, postId, []);
+  const [answers] = useAsync<MockPost[], string>(postsService.getAnswers, postId, null);
 
   const [replyIds, setReplyIds] = useState<string>('');
 
@@ -35,10 +25,10 @@ const PostDetailImpl: FC<PostDetailImplProps> = function ({ postId }) {
     }
   }, [answers]);
 
-  const [otherComments] = useFetch<MockComment[]>(
-    `/comments-api/mockComments/search/getCommentsFor?postIds=${replyIds}`,
-    commentOptions,
-    replyIds !== '',
+  const [otherComments] = useAsync<MockComment[], string>(
+    commentsService.getComments,
+    replyIds,
+    [],
   );
 
   const [answerComments, setAnswerComments] = useState<Record<number, MockComment[]>>();

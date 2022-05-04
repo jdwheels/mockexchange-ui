@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MockPost, PostsResponse } from '../posts/types';
 import { PostsList } from '../posts/PostsList';
-import { useFetch, UseFetchOptions } from '../common/utils';
+import { useAsync } from '../common/utils';
 import { Loading } from '../common/Loading';
+import { postsService } from '../posts/postsService';
 
-const postOptions: UseFetchOptions<MockPost[]> = {
-  resultMapper: (r: Response) => r.json().then((j: PostsResponse) => j.content),
-};
-
-export const Home: React.FC = function () {
-  const [posts,, loadingPosts, postsError] = useFetch<MockPost[]>('/posts-api/posts/questions', postOptions);
-
+const Home: React.FC = function () {
+  const [posts,, loadingPosts, postsError] = useAsync<MockPost[], undefined>(
+    postsService.getQuestions,
+    undefined,
+    null,
+  );
   return (
     <div data-testid="home">
       <h1>Software Engineering</h1>
@@ -33,3 +33,5 @@ export const Home: React.FC = function () {
     </div>
   );
 };
+
+export default Home;

@@ -14,13 +14,14 @@ export function getCookie(cookieName: string): string {
   return cookies[cookieName];
 }
 
-export function logout(): Promise<Response> {
-  return fetch('/posts-api/logout', {
-    method: 'POST',
+export function withCsrfToken(init: RequestInit) {
+  return {
+    ...init,
     headers: {
+      ...init.headers,
       'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'),
     },
-  });
+  };
 }
 
 function handleResponse<T>(response: Response, f: (response: Response) => Promise<T>) {
@@ -36,31 +37,25 @@ export function handleNullResponse(response: Response) {
   return handleResponse(response, () => Promise.resolve(null));
 }
 
-export interface UseFetchOptions<T> {
-  init?: RequestInit
-  resultMapper?: (r: Response) => Promise<T>,
-  initialValue?: T | undefined
-}
-
-const defaultMapper = <T>(r: Response) => r.json() as Promise<T>;
-
-export function useFetch<T>(uri: string, options: UseFetchOptions<T> = {}, exec = true)
-  : [T | undefined, (t: T | undefined) => void, boolean, string] {
-  const { init, initialValue, resultMapper = defaultMapper } = options;
-  const [result, setResult] = useState<T | undefined>(initialValue);
+export function useAsync<T, A>(
+  f: (args: A) => Promise<T>,
+  args: A,
+  initialValue: T | null,
+  exec = true,
+): [T | null | undefined, (t: T | undefined) => void, boolean, string] {
+  const [result, setResult] = useState<T | null | undefined>(initialValue);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   useEffect(() => {
     if (exec) {
-      fetch(uri, init)
-        .then((r) => handleResponse(r, resultMapper))
-        .then(setResult)
+      f(args)
+        .then((r) => setResult(r))
         .catch((e: Error) => {
           console.error(e);
           setError(e.message);
         })
         .finally(() => setLoading(false));
     }
-  }, [uri, init, resultMapper, exec]);
+  }, [f, args, exec]);
   return [result, setResult, loading, error];
 }

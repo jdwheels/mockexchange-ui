@@ -1,21 +1,14 @@
-import {
-  getAllByTestId, getByText, render, screen, waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { Home } from './Home';
-import { mockFetch } from '../test/testUtils';
-import { PostsResponse } from '../posts/types';
+import Home from './Home';
+import { postsService } from '../posts/postsService';
+import SpyInstance = jest.SpyInstance;
+
+let getQuestionsSpy: SpyInstance;
 
 beforeEach(() => {
-  global.fetch = jest.fn().mockImplementation((u: string) => {
-    if (u.startsWith('/posts-api/posts/questions')) {
-      return mockFetch<PostsResponse>({
-        content: [],
-      })();
-    }
-    return Promise.resolve(null);
-  });
+  getQuestionsSpy = jest.spyOn(postsService, 'getQuestions').mockResolvedValue([]);
 });
 
 test('<Home/>', async () => {
@@ -25,5 +18,5 @@ test('<Home/>', async () => {
   const [heading] = await screen.findAllByRole('heading');
   expect(heading.textContent).toContain('Software Engineering');
 
-  expect(global.fetch).toHaveBeenCalled();
+  expect(getQuestionsSpy).toHaveBeenCalled();
 });

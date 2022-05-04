@@ -1,20 +1,24 @@
-import { mockFetch } from './test/testUtils';
-import { PostsResponse } from './posts/types';
-import { UserDetails, UserDetailsResponse } from './users/types';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
+import React from 'react';
+import App from './App';
+import { userService } from './users/userService';
+import SpyInstance = jest.SpyInstance;
+
+let userDetailsSpy: SpyInstance;
+
+jest.mock('./pages/Home', () => function () {
+  return <div />;
+});
 
 beforeEach(() => {
-  global.fetch = jest.fn().mockImplementation((u: string) => {
-    if (u.startsWith('/posts-api/auth/user')) {
-      return mockFetch<UserDetailsResponse>({
-        user: { name: 'test' },
-      });
-    }
-    return Promise.resolve(null);
+  userDetailsSpy = jest.spyOn(userService, 'getUserDetails').mockResolvedValue({
+    name: 'test',
   });
 });
 
-describe('tests', () => {
-  it('works', () => {
-    expect(true).toBe(true);
-  });
+test('<App/>', async () => {
+  render(<MemoryRouter><App /></MemoryRouter>);
+  await waitForElementToBeRemoved(() => screen.queryByText('Loading...'));
+  expect(userDetailsSpy).toHaveBeenCalled();
 });

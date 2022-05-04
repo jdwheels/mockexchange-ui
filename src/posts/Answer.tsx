@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import { pluralize, UseFetchOptions } from '../common/utils';
-import {
-  CommentsResponse, MockComment, MockPost, PostsCollectionResponse,
-} from './types';
+import { pluralize } from '../common/utils';
+import { MockComment, MockPost } from './types';
 import { HtmlContent } from '../common/HtmlContent';
 import { InlineComment } from '../comments/InlineComment';
 
