@@ -13,9 +13,9 @@ interface PostDetailImplProps {
 }
 
 const PostDetailImpl: FC<PostDetailImplProps> = function ({ postId }) {
-  const [post] = useAsync<MockPost, string>(postsService.getQuestion, postId, null);
-  const [postComments] = useAsync<MockComment[], string>(commentsService.getComments, postId, []);
-  const [answers] = useAsync<MockPost[], string>(postsService.getAnswers, postId, null);
+  const [post] = useAsync(postsService.getQuestion, postId, null);
+  const [postComments] = useAsync(commentsService.getComments, postId, []);
+  const [answers] = useAsync(postsService.getAnswers, postId, null);
 
   const [replyIds, setReplyIds] = useState<string>('');
 
