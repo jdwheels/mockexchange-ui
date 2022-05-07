@@ -1,5 +1,5 @@
 import React, {
-  createContext, FC, PropsWithChildren, ReactNode, useMemo, useReducer,
+  createContext, FC, ReactNode, useMemo, useReducer,
 } from 'react';
 import { AppStateActions } from './types';
 import { initialState } from './initialState';

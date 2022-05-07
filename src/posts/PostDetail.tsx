@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { MockComment, MockPost } from './types';
+import { MockComment } from './types';
 import { useAsync } from '../common/utils';
 import { InlineComment } from '../comments/InlineComment';
 import { Answer } from './Answer';

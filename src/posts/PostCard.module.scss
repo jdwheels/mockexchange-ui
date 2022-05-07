@@ -1,0 +1,107 @@
+@import "../variables";
+
+.mock-post {
+  padding: 16px;
+  display: flex;
+
+  h3 {
+    margin: 0;
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      color: inherit;
+    }
+  }
+
+  border-top: 1px solid lightgray;
+
+  .mock-post-answer-count {
+    border: 1px solid $color-ok;
+    color: $color-ok;
+    text-align: center;
+    border-radius: 4px;
+  }
+
+  .mock-post-main {
+    flex-basis: 90%;
+  }
+
+  .mock-post-side {
+    flex-basis: 10%;
+    margin-right: 12px;
+    text-align: right;
+  }
+
+  .mock-post-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .mock-post-tags {
+    ul {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    li {
+      background: #18ffff;
+      color: black;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+
+    li + li {
+      margin-left: 4px;
+    }
+  }
+
+  .mock-post-last-activity {
+    display: flex;
+
+    .mock-post-last-editor {
+      padding: 2px 8px;
+      font-size: 14px;
+
+      .mock-user-name {
+        a {
+          color: white;
+        }
+
+        margin-right: 4px;
+      }
+
+      .mock-user-rep {
+        font-weight: bold;
+      }
+
+      border: 1px solid $color-primary;
+    }
+
+    .mock-post-last-edit-time {
+      margin-left: 8px;
+      border: 1px solid $color-primary;
+    }
+  }
+
+  .mock-post-header {
+    display: flex;
+  }
+
+  .mock-post-source {
+    margin-left: 12px;
+    line-height: 26px;
+  }
+}

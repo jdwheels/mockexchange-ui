@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MockPost, PostsResponse } from '../posts/types';
+import { MockPost } from '../posts/types';
 import { PostsList } from '../posts/PostsList';
 import { useAsync } from '../common/utils';
 import { Loading } from '../common/Loading';

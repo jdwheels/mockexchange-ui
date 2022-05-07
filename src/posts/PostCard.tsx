@@ -3,21 +3,22 @@ import { Link } from 'react-router-dom';
 import { pluralize } from '../common/utils';
 import { PostCardProps } from './types';
 import { SourceLinkContext } from '../common/SourceLinkContext';
+import styles from './PostCard.module.scss';
 
 export const PostCard: FC<PostCardProps> = function ({ p }) {
   const sourceLink = useContext(SourceLinkContext);
   return (
-    <div className="mock-post">
-      <div className="mock-post-side">
+    <div className={styles['mock-post']}>
+      <div className={styles['mock-post-side']}>
         {p.score && (
-          <div className="mock-post-votes">
+          <div className={styles['mock-post-votes']}>
             {p.score}
             {' '}
             {pluralize(p.score, 'vote')}
           </div>
         )}
         {p.answerCount && (
-          <div className="mock-post-answer-count">
+          <div className={styles['mock-post-answer-count']}>
             {p.answerCount}
             {' '}
             {pluralize(p.answerCount, 'answer')}
@@ -31,30 +32,30 @@ export const PostCard: FC<PostCardProps> = function ({ p }) {
           </div>
         )}
       </div>
-      <div className="mock-post-main">
-        <div className="mock-post-header">
+      <div className={styles['mock-post-main']}>
+        <div className={styles['mock-post-header']}>
           <h3>
             <Link to={`/posts/${p.id}`}>{p.title}</Link>
           </h3>
           <a
-            className="mock-post-source"
+            className={styles['mock-post-source']}
             href={`${sourceLink}/questions/${p.id}`}
           >
             Source
           </a>
         </div>
-        <div className="mock-post-footer">
-          <div className="mock-post-tags">
+        <div className={styles['mock-post-footer']}>
+          <div className={styles['mock-post-tags']}>
             {p.tags && (
               <ul>
                 {p.tags.map((t) => <li key={t}>{t}</li>)}
               </ul>
             )}
           </div>
-          <div className="mock-post-last-activity">
+          <div className={styles['mock-post-last-activity']}>
             {p.lastEditorUserId && (
-              <div className="mock-post-last-editor">
-                <span className="mock-user-name">
+              <div className={styles['mock-post-last-editor']}>
+                <span className={styles['mock-user-name']}>
                   <a href={`${sourceLink}/users/${p.lastEditorUserId}`}>
                     {p.lastEditorDisplayName}
                   </a>
@@ -62,13 +63,13 @@ export const PostCard: FC<PostCardProps> = function ({ p }) {
                   {/*  {p.lastEditorUser.displayName} */}
                   {/* </Link> */}
                 </span>
-                <span className="mock-user-rep">
+                <span className={styles['mock-user-rep']}>
                   {p.lastEditorReputation}
                 </span>
               </div>
             )}
             {p.lastEditDate && (
-              <div className="mock-post-last-edit-time">
+              <div className={styles['mock-post-last-edit-time']}>
                 {new Date(p.lastEditDate).toLocaleString()}
               </div>
             )}

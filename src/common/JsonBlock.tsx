@@ -8,7 +8,7 @@ interface JsonBlockProps {
 const JsonBlock: FC<JsonBlockProps> = function ({ json }) {
   return (
     <pre>
-      <code className="x">
+      <code>
         {JSON.stringify(json, null, 2)}
       </code>
     </pre>
