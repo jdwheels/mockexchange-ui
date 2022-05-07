@@ -9,11 +9,11 @@ export const PostCard: FC<PostCardProps> = function ({ p }) {
   return (
     <div className="mock-post">
       <div className="mock-post-side">
-        {p.votes && (
+        {p.score && (
           <div className="mock-post-votes">
-            {p.votes.length}
+            {p.score}
             {' '}
-            {pluralize(p.votes.length, 'vote')}
+            {pluralize(p.score, 'vote')}
           </div>
         )}
         {p.answerCount && (
@@ -52,18 +52,18 @@ export const PostCard: FC<PostCardProps> = function ({ p }) {
             )}
           </div>
           <div className="mock-post-last-activity">
-            {p.lastEditorUser && (
+            {p.lastEditorUserId && (
               <div className="mock-post-last-editor">
                 <span className="mock-user-name">
-                  <a href={`${sourceLink}/users/${p.lastEditorUser.id}`}>
-                    {p.lastEditorUser.displayName}
+                  <a href={`${sourceLink}/users/${p.lastEditorUserId}`}>
+                    {p.lastEditorDisplayName}
                   </a>
                   {/* <Link to={`/users/${p.lastEditorUser.id}`}> */}
                   {/*  {p.lastEditorUser.displayName} */}
                   {/* </Link> */}
                 </span>
                 <span className="mock-user-rep">
-                  {p.lastEditorUser.reputation}
+                  {p.lastEditorReputation}
                 </span>
               </div>
             )}

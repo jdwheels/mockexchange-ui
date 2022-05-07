@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 export const pluralize = function (count: number, singular: string, plural?: string) {
-  return `${count > 1 ? plural || `${singular}s` : singular}`;
+  return `${count !== 1 ? plural || `${singular}s` : singular}`;
 };
 
 export function getCookie(cookieName: string): string {
   const cookies: Record<string, string> = {};
+  console.log(document.cookie);
   document.cookie.split(';').reduce((acc, curr) => {
     const [name, value] = curr.split('=');
     acc[name] = value;

@@ -62,6 +62,7 @@ export interface MockPost {
   'ownerDisplayName'? : string | null,
   'lastEditorUserId' : number,
   'lastEditorDisplayName'? : string | null,
+  'lastEditorReputation'?: number | null,
   'score' : number,
   'title'? : string | null,
   'body' : string,
