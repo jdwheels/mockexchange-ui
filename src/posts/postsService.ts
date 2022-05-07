@@ -1,4 +1,4 @@
-import { MockPost, PostsCollectionResponse, PostsResponse } from './types';
+import { MockPost, PostsResponse } from './types';
 import { PageOptions } from '../common/types';
 
 const baseUrl = '/posts-api';
@@ -12,13 +12,12 @@ async function getQuestions(
 }
 
 async function getAnswers(questionId: number | string): Promise<MockPost[]> {
-  const response = await fetch(`${baseUrl}/mockPosts/search/getAnswers?parentId=${questionId}`);
-  const body = await response.json() as PostsCollectionResponse;
-  return body._embedded.mockPosts;
+  const response = await fetch(`${baseUrl}/posts/answers?parentId=${questionId}`);
+  return await response.json() as MockPost[];
 }
 
 async function getQuestion(id: number | string): Promise<MockPost> {
-  const response = await fetch(`${baseUrl}/mockPosts/${id}`);
+  const response = await fetch(`${baseUrl}/posts/questions/${id}`);
   return await response.json() as MockPost;
 }
 
