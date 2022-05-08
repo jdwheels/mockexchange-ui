@@ -30,3 +30,12 @@ declare module '*.module.scss' {
 
   export default classes;
 }
+
+interface MxEnv {
+  postsBaseUrl: string;
+  commentsBaseUrl: string;
+}
+
+declare namespace mx {
+  const env: MxEnv;
+}

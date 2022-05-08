@@ -20,3 +20,4 @@ FROM nginx:1.21
 WORKDIR /usr/share/nginx/html
 COPY ./dist ./
 COPY config/nginx/default.conf /etc/nginx/conf.d
+COPY config/nginx/40-index-env.sh /docker-entrypoint.d

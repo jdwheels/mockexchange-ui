@@ -1,7 +1,7 @@
 import { MockPost, PostsResponse } from './types';
 import { PageOptions } from '../common/types';
 
-const baseUrl = '/posts-api';
+const baseUrl = mx.env.postsBaseUrl;
 
 async function getQuestions(
   { page, size }: PageOptions = { page: 0, size: 20 },

@@ -7,6 +7,17 @@
     <script src="/env.js"></script>
     <title>Mock Exchange</title>
     <base href="/">
+    <script>
+        function resolveEnv(envVar) {
+            return envVar.startsWith('$') ? '' : envVar;
+        }
+        const mx = {
+            env: {
+                postsBaseUrl: resolveEnv('${MOCKEXCHANGE_POSTS_BASEURL}', '/posts-api'),
+                commentsBaseUrl: resolveEnv('${MOCKEXCHANGE_COMMENTS_BASEURL}', '/comments-api'),
+            }
+        }
+    </script>
 </head>
 <body>
     <div id="root"></div>

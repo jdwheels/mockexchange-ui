@@ -1,6 +1,6 @@
 import { CommentsResponse, MockComment } from '../posts/types';
 
-const baseUrl = '/comments-api';
+const baseUrl = mx.env.commentsBaseUrl;
 
 async function getComments(postIds: string): Promise<MockComment[]> {
   const response = await fetch(`${baseUrl}/mockComments/search/getCommentsFor?postIds=${postIds}`);
