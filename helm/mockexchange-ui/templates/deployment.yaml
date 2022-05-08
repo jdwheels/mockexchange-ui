@@ -34,3 +34,8 @@ spec:
             httpGet:
               path: /
               port: http
+          env:
+            - name: MOCKEXCHANGE_POSTS_BASEURL
+              value: {{ .Values.postsBaseUrl }}
+            - name: MOCKEXCHANGE_COMMENTS_BASEURL
+              value: {{ .Values.commentsBaseUrl }}
