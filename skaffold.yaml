@@ -15,6 +15,7 @@ deploy:
     releases:
       - name: mockexchange-ui
         chartPath: helm/mockexchange-ui
+        skipBuildDependencies: true
         valuesFiles:
           - helm/mockexchange-ui/_values.local.yaml
         artifactOverrides:
