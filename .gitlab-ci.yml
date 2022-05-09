@@ -1,4 +1,69 @@
+image: node:16
+
+cache: &global_cache
+  key:
+    prefix: ${CI_COMMIT_REF_SLUG}
+    files:
+      - package-lock.json
+  paths:
+    - node_modules/
+  policy: pull
+
+stages:
+  - setup
+  - test
+  - build
+  - deploy
+
+setup:
+  stage: setup
+  cache:
+    <<: *global_cache
+    policy: pull-push
+  script: npm i
+
+lint:
+  stage: test
+  cache:
+    <<: *global_cache
+  script: npm run lint
+
+test:
+  stage: test
+  cache:
+    <<: *global_cache
+  script: npm test
+
+webpack:
+  stage: build
+  cache:
+    <<: *global_cache
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+docker_build:
+  stage: build
+  dependencies:
+    - webpack
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  cache: []
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - >-
+      cat /etc/gitlab-runner/certs/ca.crt >> /kaniko/ssl/certs/ca-certificates.crt &&
+      /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_TAG}"
+
 deploy:
+  stage: deploy
   image:
     name: docker.k8s.local/jdwheels/bitnami-kubectl:1.22
     entrypoint: [""]
