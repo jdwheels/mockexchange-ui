@@ -66,7 +66,7 @@ docker:
 deploy:
   stage: deploy
   image:
-    name: docker.k8s.local/jdwheels/bitnami-kubectl:1.22
+    name: docker.k8s.local/jdwheels/bitnami-kubectl:1.22@sha256:eed213449a0f05188d2b3d672feed9b86cd284508ee0b6d4c70b00f968b337e3
     entrypoint: [""]
   cache: []
   script:
