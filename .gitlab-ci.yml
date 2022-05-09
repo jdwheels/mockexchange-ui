@@ -68,6 +68,8 @@ deploy:
   image:
     name: docker.k8s.local/jdwheels/bitnami-kubectl:1.22
     entrypoint: [""]
+  cache: []
   script:
     - kubectl config use-context mockexchange/mockexchange-agent:primary
     - kubectl get pods -n mockexchange
+    - helm version
