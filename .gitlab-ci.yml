@@ -13,6 +13,7 @@ stages:
   - setup
   - test
   - build
+  - docker
   - deploy
 
 setup:
@@ -44,8 +45,8 @@ webpack:
     paths:
       - dist/
 
-docker_build:
-  stage: build
+docker:
+  stage: docker
   dependencies:
     - webpack
   image:
