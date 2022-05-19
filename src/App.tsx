@@ -34,7 +34,7 @@ const App: FC = function () {
       {userDetails ? (
         <button className="logout" type="button" onClick={handleLogout}>Logout</button>
       ) : (
-        <a className="login" href="/posts-api/oauth2/authorization/github">Login with GitHub</a>
+        <a className="login" href={`${mx.env.loginBaseUrl}/oauth2/authorization/github`}>Login with GitHub</a>
       )}
       {userDetails && (
         <div>

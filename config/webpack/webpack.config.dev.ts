@@ -29,6 +29,18 @@ const config: Configuration & { devServer: DevServerConfiguration } = {
       '/posts-api': {
         target: 'https://localhost:8081',
       },
+      '/login': {
+        target: 'https://localhost:8084',
+      },
+      '/logout': {
+        target: 'https://localhost:8084',
+      },
+      '/oauth2': {
+        target: 'https://localhost:8084',
+      },
+      '/user': {
+        target: 'https://localhost:8084',
+      },
     },
   },
 };

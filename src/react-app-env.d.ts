@@ -34,6 +34,7 @@ declare module '*.module.scss' {
 interface MxEnv {
   postsBaseUrl: string;
   commentsBaseUrl: string;
+  loginBaseUrl: string;
 }
 
 declare namespace mx {
