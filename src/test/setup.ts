@@ -5,6 +5,7 @@ global.mx = {
   env: {
     postsBaseUrl: '',
     commentsBaseUrl: '',
+    loginBaseUrl: '',
   },
 };
 
