@@ -91,7 +91,7 @@ export interface PostsListProps {
   posts: MockPost[];
 }
 
-export type PostsCollectionResponse = CollectionResponse<'mockPosts', MockPost>;
+export type PostsCollectionResponse = CollectionResponse<'postSummaryList', MockPost>;
 export type PostsResponse = ContentResponse<MockPost>;
 
 export interface MockComment {
