@@ -1,0 +1,21 @@
+{{ if .Values.istio.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "mockexchange-ui.fullname" . }}
+  {{- if .Values.istio.ingressNamespace }}
+  namespace: {{ .Values.istio.ingressNamespace }}
+  {{- end }}
+spec:
+  issuerRef:
+    kind: ClusterIssuer
+    name: ow-ca-cluster-issuer
+  secretName: {{ include "mockexchange-ui.certSecretName" . }}
+  {{- with (first .Values.ingress.hosts) }}
+  commonName: {{ .host }}
+  {{- end }}
+  dnsNames:
+    {{- range .Values.ingress.hosts }}
+    - {{ .host }}
+    {{- end }}
+{{ end }}

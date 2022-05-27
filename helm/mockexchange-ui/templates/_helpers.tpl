@@ -48,6 +48,10 @@ Selector labels
 {{- define "mockexchange-ui.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "mockexchange-ui.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "mockexchange-ui.name" . }}
+{{- if .Chart.AppVersion }}
+version: {{ .Chart.AppVersion | quote }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -59,4 +63,9 @@ Create the name of the service account to use
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
+{{- end }}
+
+
+{{- define "mockexchange-ui.certSecretName" -}}
+{{ .Values.istio.gatewayCertSecret | default (printf "%s-cert" (include "mockexchange-ui.fullname" .)) }}
 {{- end }}

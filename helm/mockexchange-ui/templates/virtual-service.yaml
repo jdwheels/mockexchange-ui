@@ -1,0 +1,31 @@
+{{ if .Values.istio.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "mockexchange-ui.fullname" . }}
+spec:
+  hosts:
+    {{- range .Values.ingress.hosts }}
+    - {{ .host }}
+    {{- end }}
+  gateways:
+    -  {{ .Values.istio.gatewayName | default (include "mockexchange-ui.fullname" .) }}
+  http:
+    {{- if .Values.bffClusterHost }}
+    - name: bff
+      match:
+        - uri:
+            prefix: /bff
+      route:
+        - destination:
+            host: {{ .Values.bffClusterHost }}
+            port:
+              number: {{ .Values.bffClusterPort | default 80 }}
+    {{- end }}
+    - name: default
+      route:
+        - destination:
+            host: {{ include "mockexchange-ui.fullname" . }}
+            port:
+              number: {{ .Values.service.port }}
+{{ end }}

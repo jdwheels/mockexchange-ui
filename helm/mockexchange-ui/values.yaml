@@ -38,3 +38,17 @@ ingress:
 
 postsBaseUrl: ''
 commentsBaseUrl: ''
+bffClusterHost: ''
+bffHost: ''
+bffClusterPort:
+
+istio:
+  enabled: false
+  gatewayName: ''
+  gatewayCertSecret: ''
+  ingressNamespace: ''
+  ingressSelector: ''
+
+serviceAccount:
+  create: false
+  name: ''
