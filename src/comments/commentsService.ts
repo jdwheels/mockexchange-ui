@@ -1,6 +1,6 @@
 import { CommentsResponse, MockComment } from '../posts/types';
 
-const baseUrl = `${mx.env.commentsBaseUrl}/comments-api`;
+const baseUrl = `${mx.env.commentsBaseUrl}`;
 
 const baseOptions: RequestInit = {
   credentials: 'include',

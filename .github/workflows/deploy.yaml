@@ -53,7 +53,12 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         env:
           UI_BUCKET: ${{ secrets.UI_BUCKET }}
+          MOCKEXCHANGE_POSTS_BASEURL: ${{ secrets.MOCKEXCHANGE_POSTS_BASEURL }}
+          MOCKEXCHANGE_COMMENTS_BASEURL: ${{ secrets.MOCKEXCHANGE_COMMENTS_BASEURL }}
+          MOCKEXCHANGE_LOGIN_BASEURL: ${{ secrets.MOCKEXCHANGE_LOGIN_BASEURL }}
         run: |
+          envsubst < index.html > index.html.tmp
+          mv index.html.tmp index.html
           aws s3 sync --delete . $UI_BUCKET
       - name: Invalidate the cache
         env:
