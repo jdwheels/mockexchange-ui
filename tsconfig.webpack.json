@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "config/webpack",
+  },
+  "include": [
+    "config/webpack/*.ts",
+    "config/jest"
+  ]
+}

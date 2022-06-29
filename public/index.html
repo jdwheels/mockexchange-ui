@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="Description" content="Mock Exchange">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <script src="/env.js"></script>
+    <title>Mock Exchange</title>
+    <base href="/">
+    <script>
+        function resolveEnv(envVar) {
+            return envVar.startsWith('$') ? '' : envVar;
+        }
+        const mx = {
+            env: {
+                postsBaseUrl: resolveEnv('${MOCKEXCHANGE_POSTS_BASEURL}'),
+                commentsBaseUrl: resolveEnv('${MOCKEXCHANGE_COMMENTS_BASEURL}'),
+                loginBaseUrl: resolveEnv('${MOCKEXCHANGE_LOGIN_BASEURL}'),
+                version: resolveEnv('${RELEASE_VERSION}'),
+                sha: resolveEnv('${RELEASE_SHA}')
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

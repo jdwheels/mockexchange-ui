@@ -1,0 +1,24 @@
+apiVersion: skaffold/v2beta27
+kind: Config
+build:
+  artifacts:
+    - image: docker.k8s.local/mockexchange-ui
+      sync:
+        infer:
+          - dist
+      docker:
+        cacheFrom:
+          - docker.k8s.local/mockexchange-ui
+  local: {}
+deploy:
+  helm:
+    releases:
+      - name: mockexchange-ui
+        chartPath: helm/mockexchange-ui
+        skipBuildDependencies: true
+        valuesFiles:
+          - helm/mockexchange-ui/_values.local.yaml
+        artifactOverrides:
+          image: docker.k8s.local/mockexchange-ui
+        imageStrategy:
+          helm: {}

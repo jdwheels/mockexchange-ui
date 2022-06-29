@@ -1,0 +1,70 @@
+name: Webpack Build and Cloudfront Upload
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - src/**
+      - public/**
+      - .browserslistrc
+      - babel.config.js
+      - config/webpack.config.common.ts
+      - config/webpack.config.prod.ts
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Upload dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+  deploy:
+    needs:
+      - build
+    name: Upload to Amazon S3
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download dist
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+      - run: |
+          ls ${{ github.workspace }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region:  ${{ secrets.AWS_REGION }}
+      - name: Copy files to the test website with the AWS CLI
+        env:
+          UI_BUCKET: ${{ secrets.UI_BUCKET }}
+          MOCKEXCHANGE_POSTS_BASEURL: ${{ secrets.MOCKEXCHANGE_POSTS_BASEURL }}
+          MOCKEXCHANGE_COMMENTS_BASEURL: ${{ secrets.MOCKEXCHANGE_COMMENTS_BASEURL }}
+          MOCKEXCHANGE_LOGIN_BASEURL: ${{ secrets.MOCKEXCHANGE_LOGIN_BASEURL }}
+          RELEASE_VERSION: 1.0.0
+        run: |
+          export RELEASE_SHA=$GITHUB_SHA
+          envsubst < index.html > index.html.tmp
+          mv index.html.tmp index.html
+          aws s3 sync --delete . $UI_BUCKET
+      - name: Invalidate the cache
+        env:
+          UI_DISTRIBUTION: ${{ secrets.UI_DISTRIBUTION }}
+        run: |
+          aws cloudfront create-invalidation --distribution-id $UI_DISTRIBUTION --paths "/*"

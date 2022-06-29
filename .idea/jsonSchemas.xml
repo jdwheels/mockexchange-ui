@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="certificates">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="certificates" />
+              <option name="relativePathToSchema" value="https://schemas.k8s.local/schemas/apis/cert-manager.io/v1/namespaces/%7Bnamespace%7D/certificates.json" />
+              <option name="schemaVersion" value="JSON Schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="k8s/k8s-cert.yaml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="deployments">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="deployments" />
+              <option name="relativePathToSchema" value="https://schemas.k8s.local/schemas/apis/apps/v1/namespaces/%7Bnamespace%7D/deployments.json" />
+              <option name="schemaVersion" value="JSON Schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="k8s/k8s-deployment.yaml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="services">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="services" />
+              <option name="relativePathToSchema" value="https://schemas.k8s.local/schemas/api/v1/namespaces/%7Bnamespace%7D/services.json" />
+              <option name="schemaVersion" value="JSON Schema version 7" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="k8s/k8s-service.yaml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="skaffold.yaml">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="skaffold.yaml" />
+              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/GoogleContainerTools/skaffold/master/docs/content/en/schemas/v2beta22.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="skaffold.yaml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>

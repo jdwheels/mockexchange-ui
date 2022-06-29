@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mockexchange-ui.fullname" . }}
+  labels:
+    {{- include "mockexchange-ui.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mockexchange-ui.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mockexchange-ui.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.image.pullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 5
+            httpGet:
+              path: /
+              port: http
+          env:
+            - name: MOCKEXCHANGE_POSTS_BASEURL
+              value: {{ .Values.postsBaseUrl }}
+            - name: MOCKEXCHANGE_COMMENTS_BASEURL
+              value: {{ .Values.commentsBaseUrl }}
+            - name: MOCKEXCHANGE_LOGIN_BASEURL
+              value: {{ .Values.loginBaseUrl }}
+            - name: RELEASE_VERSION
+              value: {{ .Values.releaseVersion }}
+            - name: RELEASE_SHA
+              value: {{ .Values.releaseSha }}

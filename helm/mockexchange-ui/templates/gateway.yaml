@@ -1,0 +1,33 @@
+{{ if .Values.istio.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ .Values.istio.gatewayName | default (include "mockexchange-ui.fullname" .) }}
+spec:
+  selector:
+    istio: {{ .Values.istio.ingressSelector | default "ingressgateway" }}
+  servers:
+    {{- if .Values.istio.httpsRedirect }}
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        {{- range .Values.ingress.hosts }}
+        - {{ .host }}
+        {{- end }}
+      tls:
+        httpsRedirect: true
+    {{- end }}
+    - port:
+        number: 443
+        name: ui-https
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: {{ include "mockexchange-ui.certSecretName" . }}
+      hosts:
+        {{- range .Values.ingress.hosts }}
+        - {{ .host }}
+        {{- end }}
+{{ end }}

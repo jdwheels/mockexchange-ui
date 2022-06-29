@@ -1,0 +1,91 @@
+@import "variables";
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  background-color: #303030;
+}
+
+.post-body {
+  p {
+    margin-top: 0;
+  }
+}
+
+code {
+  font-family:
+    source-code-pro,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Courier New",
+    monospace;
+}
+
+pre {
+  background-color: black;
+  color: $color-ok;
+
+  code {
+    font-family: monospace;
+  }
+}
+
+a {
+  color: white;
+}
+
+%button-shared {
+  color: black;
+  background-color: $color-primary;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  border: none;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+a.login {
+  @extend %button-shared;
+}
+
+button.logout {
+  @extend %button-shared;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+ul {
+  li > a {
+    // text-decoration: none;
+    color: #fff;
+  }
+}
+
+.more-posts-wrap {
+  display: flex;
+  justify-content: center;
+
+  .more-posts {
+    background: $color-error;
+    padding: 16px;
+    display: inline-flex;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render blocks 1`] = `
+"<pre><code>{
+  \\"some\\": \\"block\\"
+}</code></pre>"
+`;
