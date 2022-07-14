@@ -132,25 +132,25 @@ docker image:
   artifacts:
     reports:
       dotenv: version.env
-
-deploy:
-  stage: deploy
-  needs:
-    - job: docker image
-  image:
-    name: docker.k8s.local/jdwheels/bitnami-kubectl:1.23
-    entrypoint: [""]
-  cache: []
-  script:
-    - export VERSION=${CI_COMMIT_TAG//v}
-    - kubectl config use-context mockexchange/mockexchange-agent:primary
-    - >- 
-      helm upgrade --install $CI_PROJECT_NAME helm/mockexchange-ui -n mockexchange -f $HELM_VALUES 
-      --set image.repository=$CI_REGISTRY_IMAGE/ui 
-      --set image.tag=$VERSION
-      --set image.pullSecret=gitlab-registry
-      --set releaseVersion=$VERSION
-      --set releaseSha=$CI_COMMIT_SHA
-      --atomic
-  rules:
-    - if: $CI_COMMIT_TAG
+#
+#deploy:
+#  stage: deploy
+#  needs:
+#    - job: docker image
+#  image:
+#    name: docker.k8s.local/jdwheels/bitnami-kubectl:1.23
+#    entrypoint: [""]
+#  cache: []
+#  script:
+#    - export VERSION=${CI_COMMIT_TAG//v}
+#    - kubectl config use-context mockexchange/mockexchange-agent:primary
+#    - >-
+#      helm upgrade --install $CI_PROJECT_NAME helm/mockexchange-ui -n mockexchange -f $HELM_VALUES
+#      --set image.repository=$CI_REGISTRY_IMAGE/ui
+#      --set image.tag=$VERSION
+#      --set image.pullSecret=gitlab-registry
+#      --set releaseVersion=$VERSION
+#      --set releaseSha=$CI_COMMIT_SHA
+#      --atomic
+#  rules:
+#    - if: $CI_COMMIT_TAG
